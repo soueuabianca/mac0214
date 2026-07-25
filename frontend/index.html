@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Algoritmo Vivo · Visualizador de Estruturas de Dados</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div class="app-grid">
+      <!-- ============================ HEADER GLOBAL ============================ -->
+      <header class="top-bar">
+        <div class="brand" id="brand-home" title="Página inicial">
+          <span class="brand-mark">🔴</span>
+          <span class="brand-name">Algoritmo<strong>Vivo</strong></span>
+        </div>
+
+        <nav class="category-nav" id="category-nav">
+          <!-- Dropdowns de categorias são injetados por main.js -->
+        </nav>
+
+        <div class="search-box">
+          <input
+            id="global-search"
+            type="text"
+            autocomplete="off"
+            placeholder="Buscar algoritmo…"
+          />
+          <ul id="search-results" class="search-results" hidden></ul>
+        </div>
+      </header>
+
+      <!-- ============================ WORKSPACE ============================ -->
+      <main class="workspace">
+        <div class="status-panel" title="Terminal de status do passo">
+          <span class="status-prompt">&gt;</span>
+          <span id="status-text">Selecione um algoritmo no menu para começar.</span>
+        </div>
+
+        <div class="canvas-wrapper">
+          <svg id="visualization-container" role="img" aria-label="Visualização"></svg>
+        </div>
+
+        <section class="controls">
+          <div class="playback">
+            <button id="btn-prev" class="ctrl" title="Passo anterior">⏮</button>
+            <button id="btn-play" class="ctrl ctrl-primary" title="Play/Pause">▶</button>
+            <button id="btn-next" class="ctrl" title="Próximo passo">⏭</button>
+            <div class="progress">
+              <input id="progress-slider" type="range" min="0" max="0" value="0" />
+              <span id="progress-label" class="progress-label">0 / 0</span>
+            </div>
+            <label class="speed">
+              Velocidade
+              <input id="speed-slider" type="range" min="60" max="1200" step="60" value="600" />
+            </label>
+          </div>
+
+          <div class="data-input">
+            <input
+              id="custom-input"
+              type="text"
+              placeholder="Dados: ex. 5, 3, 8, 4, 1"
+            />
+            <button id="btn-apply" class="btn-solid">Aplicar</button>
+            <button id="btn-random" class="btn-ghost">Aleatório</button>
+          </div>
+
+          <!-- Controles interativos das estruturas lineares (injetados por main.js) -->
+          <div id="linear-controls" class="linear-controls" hidden></div>
+
+          <!-- Controles interativos das árvores BST/AVL (injetados por main.js) -->
+          <div id="tree-controls" class="linear-controls" hidden></div>
+
+          <!-- Controles interativos dos grafos (injetados por main.js) -->
+          <div id="graph-controls" class="linear-controls" hidden></div>
+        </section>
+      </main>
+
+      <!-- ============================ PAINEL LATERAL ============================ -->
+      <aside class="sidebar">
+        <div class="resizer" id="sidebar-resizer" title="Arraste para redimensionar"></div>
+        <div class="algo-meta">
+          <h2 id="meta-name">Nenhum algoritmo</h2>
+          <div class="meta-badges">
+            <span class="badge">
+              <span class="badge-key">Tempo</span>
+              <span id="meta-time" class="badge-val">—</span>
+            </span>
+            <span class="badge">
+              <span class="badge-key">Espaço</span>
+              <span id="meta-space" class="badge-val">—</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="theory" role="tab">Teoria</button>
+          <button class="tab" data-tab="code" role="tab">Código</button>
+          <button class="tab" data-tab="quiz" role="tab">Quiz</button>
+        </div>
+
+        <div class="tab-panels">
+          <!-- TEORIA -->
+          <section class="tab-panel active" data-panel="theory">
+            <p id="theory-text" class="theory-text">
+              Escolha um algoritmo para ver sua explicação conceitual.
+            </p>
+            <table class="complexity-table">
+              <thead>
+                <tr><th>Caso</th><th>Complexidade</th></tr>
+              </thead>
+              <tbody id="complexity-body">
+                <tr><td>Melhor</td><td>—</td></tr>
+                <tr><td>Médio</td><td>—</td></tr>
+                <tr><td>Pior</td><td>—</td></tr>
+                <tr><td>Espaço</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- CÓDIGO -->
+          <section class="tab-panel" data-panel="code">
+            <pre class="code-block"><code id="code-body">// código do algoritmo</code></pre>
+          </section>
+
+          <!-- QUIZ -->
+          <section class="tab-panel" data-panel="quiz">
+            <div id="quiz-container" class="quiz-container">
+              <p class="hint">Selecione um algoritmo para responder ao quiz.</p>
+            </div>
+          </section>
+        </div>
+      </aside>
+
+      <!-- ============================ HOME ============================ -->
+      <section class="home" id="home">
+        <div class="home-hero">
+          <h1>Algoritmo<strong>Vivo</strong></h1>
+          <p>
+            Plataforma pedagógica interativa para visualizar algoritmos e
+            estruturas de dados passo a passo. Cada algoritmo é animado com
+            realce de comparações, ações e ponteiros, acompanhado de teoria,
+            código e quiz. As visualizações seguem o estilo do livro
+            <em>Algorithms</em> de Sedgewick &amp; Wayne.
+          </p>
+          <div class="tags">
+            <span>Ordenação</span>
+            <span>Estruturas lineares</span>
+            <span>Árvores</span>
+            <span>Grafos</span>
+          </div>
+        </div>
+        <div id="home-catalog"></div>
+      </section>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
