@@ -201,34 +201,22 @@ app.include_router(sorting_router, prefix="/api/v1")
 
 ## Roadmap
 
-### Phase 1: Infrastructure (Complete)
+### Phase 1: Infrastructure
 - Project structure and directories
 - Dockerfile and docker-compose.yml
 - Git repository
 
-### Phase 2: Backend (Complete)
+### Phase 2: Backend
 - FastAPI with CORS configuration
 - Algorithm implementations with step generation
 - REST endpoints for all categories
 - Swagger/OpenAPI documentation
 
-### Phase 3: Frontend (In Progress)
+### Phase 3: Frontend
 - React SPA with Vite
 - D3.js visualization setup
 - Control panel and player
 - API integration
-
-### Phase 4: Pedagogy (Planned)
-- Theory tab with explanations
-- Code tab with syntax highlighting
-- Comparison charts
-- Interactive quizzes
-
-### Phase 5: Polish (Planned)
-- Responsive design
-- Error handling
-- Performance optimization
-- Accessibility
 
 ## Contributing
 
