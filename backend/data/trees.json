@@ -1,0 +1,95 @@
+{
+  "bst": {
+    "algorithm": "Árvore Binária de Busca",
+    "theory": {
+      "description": "Árvore em que, para cada nó, todas as chaves à esquerda são menores e todas à direita são maiores. Busca, inserção e remoção seguem esse ordenamento, custando O(altura). Sem balanceamento, a altura pode degenerar para O(n) (entrada ordenada vira uma lista).",
+      "time_complexity": "O(log n) médio, O(n) pior",
+      "space_complexity": "O(n)"
+    },
+    "code": [
+      "def insert(node, key):",
+      "    if node is None:",
+      "        return Node(key)",
+      "    if key < node.key:",
+      "        node.left = insert(node.left, key)",
+      "    elif key > node.key:",
+      "        node.right = insert(node.right, key)",
+      "    return node   # duplicata: nada muda",
+      "",
+      "def search(node, key):",
+      "    while node and node.key != key:",
+      "        node = node.left if key < node.key else node.right",
+      "    return node   # None se nao achou",
+      "",
+      "def delete(node, key):",
+      "    if node is None: return None",
+      "    if key < node.key:   node.left  = delete(node.left, key)",
+      "    elif key > node.key: node.right = delete(node.right, key)",
+      "    else:                          # achou o no",
+      "        if not node.left:  return node.right",
+      "        if not node.right: return node.left",
+      "        succ = min_node(node.right)",
+      "        node.key = succ.key",
+      "        node.right = delete(node.right, succ.key)",
+      "    return node"
+    ],
+    "quiz": [
+      {
+        "question": "Numa BST válida, o que vale para qualquer nó?",
+        "options": ["Filhos à esquerda são maiores", "Toda a subárvore esquerda tem chaves menores e a direita, maiores", "As folhas estão todas no mesmo nível", "Cada nó tem exatamente dois filhos"],
+        "answer": 1,
+        "explanation": "A propriedade da BST é recursiva: toda a subárvore esquerda contém chaves menores que o nó e toda a direita, chaves maiores."
+      },
+      {
+        "question": "Por que a busca numa BST pode custar O(n) no pior caso?",
+        "options": ["Porque compara todos os nós sempre", "Porque a árvore pode degenerar em uma lista (altura n) se as chaves entram ordenadas", "Porque usa recursão", "Nunca custa O(n)"],
+        "answer": 1,
+        "explanation": "Sem balanceamento, inserir chaves em ordem crescente cria uma árvore-lista de altura n, e a busca percorre todos os nós: O(n)."
+      }
+    ]
+  },
+  "avl": {
+    "algorithm": "Árvore AVL",
+    "theory": {
+      "description": "BST auto-balanceada: para todo nó, as alturas das subárvores diferem em no máximo 1. Após cada inserção/remoção, o caminho de volta à raiz é revisitado e rotações (LL, RR, LR, RL) restauram o equilíbrio. Isso garante altura O(log n), então busca, inserção e remoção são O(log n) no pior caso.",
+      "time_complexity": "O(log n)",
+      "space_complexity": "O(n)"
+    },
+    "code": [
+      "def insert(node, key):",
+      "    if node is None: return Node(key)",
+      "    if key < node.key:",
+      "        node.left = insert(node.left, key)",
+      "    elif key > node.key:",
+      "        node.right = insert(node.right, key)",
+      "    update_height(node)",
+      "    return rebalance(node)   # rotaciona se |fb| > 1",
+      "",
+      "def rebalance(node):",
+      "    bf = balance(node)",
+      "    if bf > 1:                       # pesado a esquerda",
+      "        if balance(node.left) < 0:   # caso LR",
+      "            node.left = rotate_left(node.left)",
+      "        return rotate_right(node)",
+      "    if bf < -1:                      # pesado a direita",
+      "        if balance(node.right) > 0:  # caso RL",
+      "            node.right = rotate_right(node.right)",
+      "        return rotate_left(node)",
+      "    return node"
+    ],
+    "quiz": [
+      {
+        "question": "Qual invariante uma árvore AVL mantém?",
+        "options": ["Todos os nós têm dois filhos", "Para todo nó, as alturas das subárvores diferem em no máximo 1", "As chaves são pares", "A raiz é sempre a menor chave"],
+        "answer": 1,
+        "explanation": "A AVL mantém, em cada nó, |altura(esq) - altura(dir)| ≤ 1, o que limita a altura a O(log n)."
+      },
+      {
+        "question": "Um nó fica com fator de balanceamento +2 e seu filho esquerdo com -1 após uma inserção. Qual rotação corrige?",
+        "options": ["Rotação simples à direita (LL)", "Rotação dupla Esquerda-Direita (LR)", "Rotação simples à esquerda (RR)", "Nenhuma, já está balanceada"],
+        "answer": 1,
+        "explanation": "Pesado à esquerda (+2) com filho esquerdo pendendo à direita (-1) é o caso LR: rotaciona o filho à esquerda e depois o nó à direita."
+      }
+    ]
+  }
+}

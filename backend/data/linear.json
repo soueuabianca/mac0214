@@ -1,0 +1,139 @@
+{
+  "stack": {
+    "algorithm": "Pilha (Stack)",
+    "theory": {
+      "description": "Estrutura LIFO (Last In, First Out). Elementos são inseridos e removidos exclusivamente pelo topo.",
+      "time_complexity": "O(1)",
+      "space_complexity": "O(n)"
+    },
+    "code": [
+      "class Stack:",
+      "    def __init__(self):",
+      "        self.items = []",
+      "",
+      "    def push(self, item):",
+      "        self.items.append(item)",
+      "",
+      "    def pop(self):",
+      "        if not self.is_empty():",
+      "            return self.items.pop()",
+      "        return None",
+      "",
+      "    def peek(self):",
+      "        return self.items[-1] if not self.is_empty() else None"
+    ],
+    "quiz": [
+      {
+        "question": "Qual política de acesso descreve uma pilha?",
+        "options": ["FIFO (First In, First Out)", "LIFO (Last In, First Out)", "Acesso aleatório", "Prioridade por valor"],
+        "answer": 1,
+        "explanation": "A pilha é LIFO: o último elemento inserido (push) é o primeiro a sair (pop), pois ambos operam no topo."
+      },
+      {
+        "question": "Qual a complexidade de tempo das operações push e pop em uma pilha baseada em array dinâmico?",
+        "options": ["O(n)", "O(log n)", "O(1) amortizado", "O(n log n)"],
+        "answer": 2,
+        "explanation": "push e pop atuam apenas no topo (fim do array), custando O(1) amortizado — o realocamento ocasional dilui-se no total."
+      }
+    ]
+  },
+  "queue": {
+    "algorithm": "Fila (Queue)",
+    "theory": {
+      "description": "Estrutura FIFO (First In, First Out). Inserções ocorrem no final (rear) e remoções no início (front).",
+      "time_complexity": "O(1)",
+      "space_complexity": "O(n)"
+    },
+    "code": [
+      "class Queue:",
+      "    def __init__(self):",
+      "        self.items = []",
+      "",
+      "    def enqueue(self, item):",
+      "        self.items.append(item)",
+      "",
+      "    def dequeue(self):",
+      "        if not self.is_empty():",
+      "            return self.items.pop(0)",
+      "        return None",
+      "",
+      "    def front(self):",
+      "        return self.items[0] if not self.is_empty() else None"
+    ],
+    "quiz": [
+      {
+        "question": "Em uma fila, onde ocorrem inserção e remoção?",
+        "options": ["Ambas no início", "Ambas no fim", "Inserção no fim, remoção no início", "Inserção no início, remoção no fim"],
+        "answer": 2,
+        "explanation": "Fila é FIFO: enqueue insere no rear (fim) e dequeue remove no front (início), preservando a ordem de chegada."
+      },
+      {
+        "question": "Numa fila implementada como lista Python, por que dequeue com pop(0) pode ser ineficiente?",
+        "options": ["Consome O(n) ao deslocar todos os elementos", "Nunca é ineficiente", "Usa O(log n)", "Duplica a memória a cada chamada"],
+        "answer": 0,
+        "explanation": "pop(0) desloca todos os elementos restantes uma posição à esquerda, custando O(n). Uma deque resolve isso com O(1)."
+      }
+    ]
+  },
+  "linked": {
+    "algorithm": "Lista Encadeada",
+    "theory": {
+      "description": "Estrutura de nós interligados por ponteiros. Permite alocação dinâmica, mas o acesso aos elementos requer travessia sequencial (O(n)).",
+      "time_complexity": "O(n)",
+      "space_complexity": "O(n)"
+    },
+    "code": [
+      "class Node:",
+      "    def __init__(self, data):",
+      "        self.data = data",
+      "        self.next = None",
+      "",
+      "class LinkedList:",
+      "    def __init__(self):",
+      "        self.head = None",
+      "",
+      "    def insert(self, data):",
+      "        new_node = Node(data)",
+      "        if not self.head:",
+      "            self.head = new_node; return",
+      "        cur = self.head",
+      "        while cur.next:",
+      "            cur = cur.next",
+      "        cur.next = new_node",
+      "",
+      "    def search(self, target):",
+      "        cur = self.head",
+      "        while cur:",
+      "            if cur.data == target:",
+      "                return True",
+      "            cur = cur.next",
+      "        return False",
+      "",
+      "    def delete(self, target):",
+      "        cur = self.head; prev = None",
+      "        while cur:",
+      "            if cur.data == target:",
+      "                break",
+      "            prev, cur = cur, cur.next",
+      "        if not cur: return",
+      "        if not prev:",
+      "            self.head = cur.next",
+      "        else:",
+      "            prev.next = cur.next"
+    ],
+    "quiz": [
+      {
+        "question": "Qual a complexidade de buscar um valor em uma lista encadeada simples?",
+        "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+        "answer": 2,
+        "explanation": "Sem índices, a busca percorre os nós um a um a partir do head até achar o alvo ou chegar ao fim: O(n)."
+      },
+      {
+        "question": "Ao remover um nó do meio de uma lista encadeada, qual ponteiro é religado?",
+        "options": ["O next do nó anterior passa a apontar para o próximo do nó removido", "O head sempre é atualizado", "Nenhum ponteiro muda", "O next do nó removido aponta para o head"],
+        "answer": 0,
+        "explanation": "Para remover um nó interno, o campo next do nó anterior (prev.next) passa a apontar para cur.next, pulando o nó removido."
+      }
+    ]
+  }
+}

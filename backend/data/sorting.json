@@ -1,0 +1,277 @@
+{
+  "bubble": {
+    "algorithm": "Bubble Sort",
+    "theory": {
+      "description": "O Bubble Sort é um algoritmo simples que percorre a lista repetidas vezes, compara elementos adjacentes e os troca de lugar se estiverem na ordem errada. O processo se repete até que nenhuma troca seja necessária.",
+      "time_complexity": "O(n²)",
+      "space_complexity": "O(1)"
+    },
+    "code": [
+      "def bubble_sort(arr):",
+      "    n = len(arr)",
+      "    for i in range(n):",
+      "        swapped = False",
+      "        for j in range(0, n - i - 1):",
+      "            if arr[j] > arr[j + 1]:",
+      "                arr[j], arr[j + 1] = arr[j + 1], arr[j]",
+      "                swapped = True",
+      "        if not swapped:",
+      "            break",
+      "    return arr"
+    ],
+    "quiz": [
+      {
+        "question": "Qual é a complexidade de tempo do Bubble Sort no melhor caso (array já ordenado)?",
+        "options": ["O(n)", "O(n log n)", "O(n²)", "O(1)"],
+        "answer": 0,
+        "explanation": "Se o algoritmo for otimizado com uma flag de verificação (swapped), ele fará apenas uma passagem pelo array se este já estiver ordenado, resultando em complexidade O(n)."
+      },
+      {
+        "question": "Qual metadado de um passo o frontend usa para pintar duas barras de laranja?",
+        "options": ["swapped_indices", "compared_indices", "active_range", "is_sorted"],
+        "answer": 1,
+        "explanation": "compared_indices carrega os índices que estão sendo comparados naquele frame; o renderer os pinta com a cor de aviso (laranja)."
+      }
+    ]
+  },
+  "merge": {
+    "algorithm": "Merge Sort",
+    "theory": {
+      "description": "O Merge Sort utiliza a estratégia de divisão e conquista. Ele divide o array recursivamente pela metade até que cada sub-array contenha um único elemento, e então mescla (merge) essas partes de forma ordenada.",
+      "time_complexity": "O(n log n)",
+      "space_complexity": "O(n)"
+    },
+    "code": [
+      "def merge_sort(arr, left, right):",
+      "    if left < right:",
+      "        mid = (left + right) // 2",
+      "        merge_sort(arr, left, mid)",
+      "        merge_sort(arr, mid + 1, right)",
+      "        merge(arr, left, mid, right)",
+      "",
+      "def merge(arr, left, mid, right):",
+      "    L = arr[left:mid + 1]",
+      "    R = arr[mid + 1:right + 1]",
+      "    i = j = 0",
+      "    k = left",
+      "    while i < len(L) and j < len(R):",
+      "        if L[i] <= R[j]:",
+      "            arr[k] = L[i]; i += 1",
+      "        else:",
+      "            arr[k] = R[j]; j += 1",
+      "        k += 1",
+      "    while i < len(L):",
+      "        arr[k] = L[i]; i += 1; k += 1",
+      "    while j < len(R):",
+      "        arr[k] = R[j]; j += 1; k += 1"
+    ],
+    "quiz": [
+      {
+        "question": "Por que a complexidade de espaço do Merge Sort é O(n)?",
+        "options": [
+          "Devido à profundidade da pilha de recursão.",
+          "Porque ele exige a alocação de arrays auxiliares durante a fase de mesclagem.",
+          "Porque ele modifica o array in-place.",
+          "É um erro, a complexidade de espaço é O(1)."
+        ],
+        "answer": 1,
+        "explanation": "Diferente de algoritmos in-place, o Merge Sort necessita copiar os dados para arrays temporários durante a junção das partes ordenadas."
+      },
+      {
+        "question": "Qual é o caso de tempo do Merge Sort no PIOR cenário?",
+        "options": ["O(n²)", "O(n log n)", "O(n)", "O(log n)"],
+        "answer": 1,
+        "explanation": "O Merge Sort mantém O(n log n) em todos os casos, pois a divisão pela metade e a mesclagem linear independem da ordem inicial dos dados."
+      }
+    ]
+  },
+  "quick": {
+    "algorithm": "Quick Sort",
+    "theory": {
+      "description": "O Quick Sort também utiliza divisão e conquista. Ele escolhe um elemento como 'pivô' e particiona o array ao redor do pivô, colocando elementos menores à esquerda e maiores à direita, ordenando os sub-arrays recursivamente.",
+      "time_complexity": "O(n log n)",
+      "space_complexity": "O(log n)"
+    },
+    "code": [
+      "def quick_sort(arr, low, high):",
+      "    if low < high:",
+      "        pi = partition(arr, low, high)",
+      "        quick_sort(arr, low, pi - 1)",
+      "        quick_sort(arr, pi + 1, high)",
+      "",
+      "def partition(arr, low, high):",
+      "    pivot = arr[high]",
+      "    i = low - 1",
+      "    for j in range(low, high):",
+      "        if arr[j] < pivot:",
+      "            i += 1",
+      "            arr[i], arr[j] = arr[j], arr[i]",
+      "    arr[i + 1], arr[high] = arr[high], arr[i + 1]",
+      "    return i + 1"
+    ],
+    "quiz": [
+      {
+        "question": "Qual é o cenário que resulta na pior complexidade de tempo O(n²) para o Quick Sort?",
+        "options": [
+          "Quando o array possui muitos elementos duplicados.",
+          "Quando o pivô escolhido é sempre o menor ou maior elemento (ex: array já ordenado).",
+          "Quando o array é muito pequeno.",
+          "Quando o algoritmo usa memória extra."
+        ],
+        "answer": 1,
+        "explanation": "Se o array já estiver ordenado e o último elemento for sempre escolhido como pivô, o particionamento será extremamente desbalanceado, degradando o tempo para O(n²)."
+      },
+      {
+        "question": "Nesta implementação, qual elemento é escolhido como pivô?",
+        "options": [
+          "O primeiro elemento da partição.",
+          "O elemento do meio.",
+          "O último elemento da partição (arr[high]).",
+          "Um elemento aleatório."
+        ],
+        "answer": 2,
+        "explanation": "O esquema de partição de Lomé utilizado aqui escolhe sempre arr[high], o último elemento da partição, como pivô."
+      }
+    ]
+  },
+  "insertion": {
+    "algorithm": "Insertion Sort",
+    "theory": {
+      "description": "O Insertion Sort constrói o array ordenado um elemento de cada vez. Ele itera consumindo um elemento de entrada por vez e o insere na posição correta dentro da sublista já ordenada à sua esquerda.",
+      "time_complexity": "O(n²)",
+      "space_complexity": "O(1)"
+    },
+    "code": [
+      "def insertion_sort(arr):",
+      "    for i in range(1, len(arr)):",
+      "        key = arr[i]",
+      "        j = i - 1",
+      "        while j >= 0 and arr[j] > key:",
+      "            arr[j + 1] = arr[j]",
+      "            j -= 1",
+      "        arr[j + 1] = key",
+      "    return arr"
+    ],
+    "quiz": [
+      {
+        "question": "Em qual situação o Insertion Sort é considerado altamente eficiente?",
+        "options": [
+          "Para arrays com milhões de elementos aleatórios.",
+          "Quando o array está ordenado em ordem reversa.",
+          "Para arrays muito pequenos ou quase totalmente ordenados.",
+          "Na ordenação de strings longas."
+        ],
+        "answer": 2,
+        "explanation": "Em arrays quase ordenados, o loop interno realiza pouquíssimas comparações e deslocamentos, fazendo o algoritmo operar próximo da complexidade O(n)."
+      },
+      {
+        "question": "O Insertion Sort é um algoritmo de ordenação estável?",
+        "options": [
+          "Sim, mantém a ordem relativa de elementos iguais.",
+          "Não, embaralha elementos iguais.",
+          "Depende do pivô escolhido.",
+          "Apenas para números negativos."
+        ],
+        "answer": 0,
+        "explanation": "Como só desloca elementos estritamente maiores que a chave, elementos de mesmo valor preservam sua ordem original — logo é estável."
+      }
+    ]
+  },
+  "selection": {
+    "algorithm": "Selection Sort",
+    "theory": {
+      "description": "O Selection Sort divide o array em duas partes: a sublista ordenada e a não ordenada. Em cada iteração, ele busca o menor elemento da parte não ordenada e o troca com o elemento no início dessa parte.",
+      "time_complexity": "O(n²)",
+      "space_complexity": "O(1)"
+    },
+    "code": [
+      "def selection_sort(arr):",
+      "    n = len(arr)",
+      "    for i in range(n):",
+      "        min_idx = i",
+      "        for j in range(i + 1, n):",
+      "            if arr[j] < arr[min_idx]:",
+      "                min_idx = j",
+      "        arr[i], arr[min_idx] = arr[min_idx], arr[i]",
+      "    return arr"
+    ],
+    "quiz": [
+      {
+        "question": "Como a complexidade de tempo do Selection Sort se comporta em diferentes casos (melhor, médio, pior)?",
+        "options": [
+          "O(n) no melhor caso, O(n²) no pior.",
+          "O(n log n) em todos os casos.",
+          "O(n²) estritamente em todos os casos.",
+          "O(n) para arrays quase ordenados."
+        ],
+        "answer": 2,
+        "explanation": "Diferente do Bubble ou Insertion, o Selection Sort não se beneficia de arrays parcialmente ordenados. Ele sempre varre toda a sublista não ordenada para encontrar o mínimo, resultando em O(n²) independentemente da entrada."
+      },
+      {
+        "question": "Qual é a principal vantagem prática do Selection Sort?",
+        "options": [
+          "É o algoritmo mais rápido conhecido.",
+          "Realiza no máximo O(n) trocas, útil quando escrever na memória é caro.",
+          "É sempre estável.",
+          "Usa O(n) de memória auxiliar."
+        ],
+        "answer": 1,
+        "explanation": "O Selection Sort faz no máximo n-1 trocas (uma por iteração externa), o que o torna atraente quando o custo de escrita/troca é alto."
+      }
+    ]
+  },
+  "heap": {
+    "algorithm": "Heap Sort",
+    "theory": {
+      "description": "O Heap Sort é baseado na estrutura de dados Heap (árvore binária quase completa). Ele primeiro converte o array em um Max Heap e, repetidamente, extrai o maior elemento (a raiz) colocando-o no final do array.",
+      "time_complexity": "O(n log n)",
+      "space_complexity": "O(1)"
+    },
+    "code": [
+      "def heap_sort(arr):",
+      "    n = len(arr)",
+      "    for i in range(n // 2 - 1, -1, -1):",
+      "        heapify(arr, n, i)",
+      "    for i in range(n - 1, 0, -1):",
+      "        arr[0], arr[i] = arr[i], arr[0]",
+      "        heapify(arr, i, 0)",
+      "    return arr",
+      "",
+      "def heapify(arr, size, root):",
+      "    largest = root",
+      "    left = 2 * root + 1",
+      "    right = 2 * root + 2",
+      "    if left < size and arr[left] > arr[largest]:",
+      "        largest = left",
+      "    if right < size and arr[right] > arr[largest]:",
+      "        largest = right",
+      "    if largest != root:",
+      "        arr[root], arr[largest] = arr[largest], arr[root]",
+      "        heapify(arr, size, largest)"
+    ],
+    "quiz": [
+      {
+        "question": "Embora tenha a mesma complexidade teórica de tempo que o Merge Sort, o Heap Sort possui uma vantagem em complexidade de espaço. Qual é?",
+        "options": [
+          "Heap Sort não requer alocação de memória auxiliar, operando in-place (O(1)).",
+          "Heap Sort utiliza O(log n) de espaço.",
+          "Heap Sort aloca arrays menores.",
+          "Não há vantagem; ambos são O(n) em espaço."
+        ],
+        "answer": 0,
+        "explanation": "O Heap Sort reorganiza os elementos dentro do próprio array de entrada para manter a estrutura do heap, não exigindo arrays temporários O(n) como o Merge Sort."
+      },
+      {
+        "question": "Para um nó no índice i de um heap baseado em array, onde ficam seus filhos?",
+        "options": [
+          "i-1 e i+1",
+          "2i e 2i+1",
+          "2i+1 e 2i+2",
+          "i/2 e i/2 + 1"
+        ],
+        "answer": 2,
+        "explanation": "Em um heap 0-indexado, os filhos do nó i estão em 2i+1 (esquerdo) e 2i+2 (direito), como visto na função heapify."
+      }
+    ]
+  }
+}

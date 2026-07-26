@@ -1,0 +1,96 @@
+{
+  "bfs": {
+    "algorithm": "Busca em Largura (BFS)",
+    "theory": {
+      "description": "Explora o grafo em camadas a partir da origem: primeiro todos os vizinhos diretos, depois os vizinhos deles, e assim por diante. Usa uma fila (FIFO). Em grafos não ponderados, encontra o caminho mínimo em número de arestas de s a todo vértice alcançável.",
+      "time_complexity": "O(V + E)",
+      "space_complexity": "O(V)"
+    },
+    "code": [
+      "def bfs(G, s):",
+      "    fila = [s]; dist[s] = 0; visitado = {s}",
+      "    while fila:",
+      "        u = fila.pop(0)",
+      "        for w in G.adj(u):",
+      "            if w not in visitado:",
+      "                visitado.add(w)",
+      "                dist[w] = dist[u] + 1; fila.append(w)"
+    ],
+    "quiz": [
+      {
+        "question": "Qual estrutura de dados a BFS usa para escolher o próximo vértice?",
+        "options": ["Pilha (LIFO)", "Fila (FIFO)", "Fila de prioridade", "Nenhuma"],
+        "answer": 1,
+        "explanation": "A BFS usa uma fila FIFO: os vértices são processados na ordem em que foram descobertos, o que gera a exploração por camadas."
+      },
+      {
+        "question": "Em um grafo não ponderado, o que a BFS a partir de s garante?",
+        "options": ["A árvore geradora mínima", "O caminho com menos arestas de s a cada vértice", "A ordenação topológica", "Nada sobre distâncias"],
+        "answer": 1,
+        "explanation": "Como explora por camadas, a BFS alcança cada vértice pelo menor número de arestas possível a partir de s."
+      }
+    ]
+  },
+  "dfs": {
+    "algorithm": "Busca em Profundidade (DFS)",
+    "theory": {
+      "description": "Explora o mais fundo possível antes de retroceder: a partir de um vértice, segue por uma aresta até um vizinho não visitado e repete recursivamente; ao esgotar, faz backtracking. Usa a pilha de recursão. Base para detecção de ciclos, componentes conexas e ordenação topológica.",
+      "time_complexity": "O(V + E)",
+      "space_complexity": "O(V)"
+    },
+    "code": [
+      "def dfs(G, u):",
+      "    visitado.add(u)",
+      "    for w in G.adj(u):",
+      "        if w not in visitado:",
+      "            dfs(G, w)   # aresta de arvore u-w"
+    ],
+    "quiz": [
+      {
+        "question": "Como a DFS decide o próximo vértice a explorar?",
+        "options": ["O mais próximo da origem", "Vai o mais fundo possível antes de retroceder", "O de menor peso", "Aleatoriamente"],
+        "answer": 1,
+        "explanation": "A DFS aprofunda por um caminho até não haver vizinho novo, então retrocede (backtracking) — comportamento natural da pilha de recursão."
+      },
+      {
+        "question": "Qual a complexidade de tempo da DFS com lista de adjacência?",
+        "options": ["O(V²)", "O(V + E)", "O(E log V)", "O(V!)"],
+        "answer": 1,
+        "explanation": "Cada vértice é visitado uma vez e cada aresta é examinada um número constante de vezes: O(V + E)."
+      }
+    ]
+  },
+  "dijkstra": {
+    "algorithm": "Dijkstra",
+    "theory": {
+      "description": "Caminhos mínimos de fonte única em grafos com pesos não negativos. Mantém distâncias tentativas, sempre fixa o vértice não fixado de menor distância (via fila de prioridade) e relaxa suas arestas. Ao fixar um vértice, sua distância é definitiva.",
+      "time_complexity": "O(E log V)",
+      "space_complexity": "O(V)"
+    },
+    "code": [
+      "def dijkstra(G, s):",
+      "    dist = {v: inf for v in G.V}; dist[s] = 0",
+      "    pq = MinPQ(); pq.push(0, s)",
+      "    while pq:",
+      "        u = pq.del_min()   # menor dist",
+      "        for (w, peso) in G.adj(u):",
+      "            nd = dist[u] + peso",
+      "            if nd < dist[w]:            # relaxa u-w",
+      "                dist[w] = nd; pq.push(nd, w)"
+    ],
+    "quiz": [
+      {
+        "question": "Qual restrição sobre os pesos o Dijkstra exige para estar correto?",
+        "options": ["Pesos inteiros", "Pesos não negativos", "Pesos distintos", "Grafo dirigido"],
+        "answer": 1,
+        "explanation": "Dijkstra assume pesos não negativos; com pesos negativos, fixar o mínimo atual pode estar errado (use Bellman-Ford nesse caso)."
+      },
+      {
+        "question": "O que significa 'relaxar' a aresta u→w?",
+        "options": ["Remover a aresta", "Se dist[u]+peso < dist[w], melhorar dist[w]", "Inverter a direção", "Somar 1 ao peso"],
+        "answer": 1,
+        "explanation": "Relaxar testa se ir por u encurta o caminho até w; em caso afirmativo, atualiza dist[w] e o predecessor."
+      }
+    ]
+  }
+}
